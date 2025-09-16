@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import { Moon, Sun, Mail, User, FileText, Rocket, MessageCircle, Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
+import Link from "next/link"
 
 export default function Portfolio() {
   const [isDarkMode, setIsDarkMode] = useState(false)
@@ -27,10 +28,10 @@ export default function Portfolio() {
   }, [])
 
   const navItems = [
-    { id: "home", name: "Home", icon: Mail },
+    { id: "home", name: "Home", icon: Mail, href: "/" },
     { id: "me", name: "Who am I?", icon: User },
     { id: "experience", name: "Experience", icon: FileText },
-    { id: "essays", name: "Essays", icon: FileText },
+    { id: "essays", name: "Essays", icon: FileText, href: "/essays" },
     { id: "startup", name: "Start-up", icon: Rocket },
     { id: "contact", name: "Contact Me", icon: MessageCircle },
   ]
@@ -100,6 +101,22 @@ export default function Portfolio() {
               <div className="space-y-2 flex-1">
                 {navItems.map((item) => {
                   const Icon = item.icon
+                  if (item.href) {
+                    return (
+                      <Link key={item.id} href={item.href}>
+                        <button
+                          className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-all duration-200 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground ${
+                            currentPage === item.id
+                              ? "bg-sidebar-primary text-sidebar-primary-foreground"
+                              : "text-sidebar-foreground"
+                          }`}
+                        >
+                          <Icon className="h-5 w-5" />
+                          {item.name}
+                        </button>
+                      </Link>
+                    )
+                  }
                   return (
                     <button
                       key={item.id}
