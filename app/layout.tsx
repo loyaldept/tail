@@ -1,35 +1,32 @@
 import type React from "react"
-import { Space_Grotesk } from "next/font/google"
-import { Toaster } from "@/components/ui/toaster"
+import type { Metadata } from "next"
+import { JetBrains_Mono } from "next/font/google"
+import { Analytics } from "@vercel/analytics/next"
+import { Suspense } from "react"
 import "./globals.css"
 
-const spaceGrotesk = Space_Grotesk({
+const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-jetbrains-mono",
+  display: "swap",
 })
 
-export const metadata = {
-  title: "TAIL - AI Financial Intelligence",
-  description: "The first ever autonomous financial intelligence to spend, track and improve your credit score.",
-  icons: {
-    icon: "/favicon.png",
-  },
-    generator: 'v0.dev'
+export const metadata: Metadata = {
+  title: "Zuhayr Abdullazhanov - Portfolio",
+  description: "Developer, Writer, Entrepreneur",
+  generator: "v0.app",
 }
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode
-}) {
+}>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <link rel="icon" href="/favicon.png" />
-      </head>
-      <body className={spaceGrotesk.className}>
-        {children}
-        <Toaster />
+    <html lang="en">
+      <body className={`font-mono ${jetbrainsMono.variable}`}>
+        <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+        <Analytics />
       </body>
     </html>
   )
